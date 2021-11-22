@@ -1,0 +1,25 @@
+---
+# tasks file for set_pass
+
+- name: Set password
+  mysql_user:
+    login_user: 'root'
+    name: 'root'
+    password: "{{ mysql_root_password }}"
+    check_implicit_admin: yes  
+    priv: "*.*:ALL,GRANT"
+    state: present 
+- name: Save new root password in temporary file
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0400
+- name: Remove temporary file
+  file:
+    state: absent
+    path: /root/.my.cnf.new
+- file: 
+    path: /tmp/passwordfile
+    state: absent    

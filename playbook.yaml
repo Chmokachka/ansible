@@ -1,0 +1,7 @@
+- name: Root password
+  hosts: mysql
+  become: yes
+  roles: 
+    - install_mysql
+    - set_pass
+    - create_db

@@ -1,0 +1,15 @@
+---
+# tasks file for create_db
+- name: create a new database  
+  mysql_db: 
+    name: 'testdb' 
+    state: present 
+    login_user: root 
+- name: add sample data to database  
+  copy: src=test.sql dest=/tmp/dump.sql  
+- name: insert sample data into database  
+  mysql_db: 
+    name: 'testdb'
+    state: import 
+    target: /tmp/dump.sql 
+    login_user: root

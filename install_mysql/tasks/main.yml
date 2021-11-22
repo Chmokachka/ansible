@@ -1,0 +1,17 @@
+---
+# tasks file for install_mysql
+- name: update apt
+  apt: 
+    update_cache: True
+- name: install mysql server
+  apt:
+    pkg:
+      - mysql-server
+      - mysql-client
+      - python3-pymysql
+    state: present
+- name: make sure mysql is running
+  service:
+    name: mysql
+    state: started
+    enabled: True
